@@ -38,13 +38,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell do |shell|
      shell.inline = "puppet module install puppetlabs-stdlib;
                      puppet module install puppetlabs-apt;
-                     puppet module install dwerder-redis
+                     puppet module install puppetlabs-git;
+                     puppet module install zack-r10k;
+                     puppet module install basholabs-riak;
                      puppet module install boundary-boundary;
                      exit 0"
   end
 
   #
-  # Use Puppet to provision the server and setup an elastic search cluster
+  # Use Puppet to provision the server and setup a riak cluster
   # on a single box
   #
   config.vm.provision "puppet" do |puppet|
@@ -52,7 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.manifest_file  = "site.pp"
     puppet.facter = {
       "boundary_api_token" => ENV["BOUNDARY_API_TOKEN"],
-      "redis_version" => ENV["BOUNDARY_REDIS_VERSION"] ||= "3.0.3"
+      "riak_version" => ENV["BOUNDARY_RIAK_VERSION"] ||= "latest"
     }
   end
 
