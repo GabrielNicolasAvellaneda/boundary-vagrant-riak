@@ -39,7 +39,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      shell.inline = "puppet module install puppetlabs-stdlib;
                      puppet module install puppetlabs-apt;
                      puppet module install puppetlabs-git;
-                     puppet module install zack-r10k;
                      puppet module install basholabs-riak;
                      puppet module install boundary-boundary;
                      exit 0"

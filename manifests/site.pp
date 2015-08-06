@@ -17,8 +17,6 @@ node /^ubuntu/ {
 
   include git
 
-  include r10k
-
   class { 'boundary':
     token => $boundary_api_token,
   }
@@ -31,6 +29,14 @@ node /^ubuntu/ {
   package { 'tmux':
     provider => 'apt',
     require => Exec['update-apt-packages']
+  }
+
+  class { '::riak':
+    version => 'latest', # default, use a package version if desired
+    # settings in the settings hash are written directly to settings.conf.
+    settings => {
+      'nodename' => 'riak@127.0.0.1'
+    },
   }
 
 }
